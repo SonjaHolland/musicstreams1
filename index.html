@@ -1,3 +1,421 @@
-<audio controls autoplay>
-<source src="https://stream.laut.fm/love">
-</audio>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deluxe Wurlitzer Jukebox</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#050505;
+font-family:Arial,Helvetica,sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+/* BACKGROUND GLOW */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#ff006655,transparent 40%),
+radial-gradient(circle at bottom,#00d9ff55,transparent 45%);
+animation:bgpulse 6s infinite alternate;
+}
+
+@keyframes bgpulse{
+from{filter:brightness(1);}
+to{filter:brightness(1.4);}
+}
+
+/* JUKEBOX */
+
+.jukebox{
+width:800px;
+border-radius:40px;
+overflow:hidden;
+background:linear-gradient(#dcdcdc,#666);
+border:10px solid silver;
+box-shadow:
+0 0 20px white,
+0 0 50px #00ffff,
+0 0 100px #ff00aa;
+}
+
+/* LED BORDER */
+
+.leds{
+height:20px;
+background:
+repeating-linear-gradient(
+90deg,
+#ff0000 0 10px,
+#ffff00 10px 20px,
+#00ff00 20px 30px,
+#00ffff 30px 40px,
+#ff00ff 40px 50px);
+animation:ledrun 1s linear infinite;
+}
+
+@keyframes ledrun{
+from{background-position:0;}
+to{background-position:250px;}
+}
+
+/* ARCH */
+
+.arch{
+height:120px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+90deg,
+#ff0044,
+#ff9900,
+#ffee00,
+#00ff88,
+#00ffff,
+#3366ff,
+#ff00ff);
+
+animation:rainbow 6s linear infinite;
+}
+
+@keyframes rainbow{
+0%{filter:hue-rotate(0deg);}
+100%{filter:hue-rotate(360deg);}
+}
+
+.arch h1{
+color:white;
+font-size:42px;
+text-shadow:
+0 0 10px white,
+0 0 20px white,
+0 0 30px white;
+}
+
+/* RECORD */
+
+.record-area{
+height:220px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+radial-gradient(circle,#660000,#220000);
+position:relative;
+overflow:hidden;
+}
+
+.record-area::before{
+content:'';
+position:absolute;
+width:500px;
+height:500px;
+border-radius:50%;
+background:
+radial-gradient(circle,#ffffff22,transparent);
+animation:lightspin 8s linear infinite;
+}
+
+@keyframes lightspin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+.record{
+width:170px;
+height:170px;
+border-radius:50%;
+background:
+radial-gradient(circle,#ddd 0 18px,#111 20px 100%);
+box-shadow:
+0 0 30px rgba(255,255,255,.3);
+animation:spin 3s linear infinite;
+}
+
+.record.stop{
+animation:none;
+}
+
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+/* NOW PLAYING */
+
+.display{
+background:black;
+color:#00ff88;
+padding:18px;
+font-size:26px;
+font-weight:bold;
+overflow:hidden;
+white-space:nowrap;
+border-top:3px solid #555;
+border-bottom:3px solid #555;
+}
+
+.scroll{
+display:inline-block;
+padding-left:100%;
+animation:scroll 12s linear infinite;
+}
+
+@keyframes scroll{
+from{transform:translateX(0);}
+to{transform:translateX(-100%);}
+}
+
+/* EQUALIZER */
+
+.equalizer{
+height:80px;
+display:flex;
+justify-content:center;
+align-items:flex-end;
+gap:5px;
+background:#111;
+padding-bottom:10px;
+}
+
+.bar{
+width:10px;
+background:#00ff66;
+animation:eq .8s infinite ease-in-out;
+}
+
+.bar:nth-child(odd){
+animation-duration:.6s;
+}
+
+.bar:nth-child(even){
+animation-duration:1s;
+}
+
+@keyframes eq{
+0%{height:10px;}
+50%{height:70px;}
+100%{height:15px;}
+}
+
+/* BUTTONS */
+
+.buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+padding:25px;
+background:#1b1b1b;
+}
+
+.btn{
+border:none;
+padding:18px;
+border-radius:14px;
+cursor:pointer;
+font-size:22px;
+font-weight:bold;
+color:white;
+background:
+linear-gradient(#444,#111);
+
+box-shadow:
+0 0 12px #00c8ff;
+
+transition:.25s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:
+0 0 25px #00ffff,
+0 0 50px #00ffff;
+}
+
+.btn.active{
+background:
+linear-gradient(#00c853,#006b33);
+
+box-shadow:
+0 0 20px #00ff66,
+0 0 50px #00ff66,
+0 0 80px #00ff66;
+
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.05);
+}
+}
+
+/* FOOTER */
+
+.footer{
+padding:16px;
+text-align:center;
+background:#111;
+color:#ccc;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="jukebox">
+
+<div class="leds"></div>
+
+<div class="arch">
+<h1>181.FM DELUXE WURLITZER</h1>
+</div>
+
+<div class="record-area">
+<div class="record stop" id="record"></div>
+</div>
+
+<div class="display">
+<div class="scroll" id="display">
+NOW PLAYING : NONE
+</div>
+</div>
+
+<div class="equalizer">
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+</div>
+
+<div class="buttons">
+
+<button class="btn"
+data-name="SOUL"
+data-stream="https://stream.laut.fm/love">
+SOUL
+</button>
+
+<button class="btn"
+data-name="SUPER 70'S"
+data-stream="https://streams.norawebstreams.de/nora-70er">
+SUPER 70'S
+</button>
+
+<button class="btn"
+data-name="AWESOME 80'S"
+data-stream="http://ice1.somafm.com/u80s-128-mp3">
+AWESOME 80'S
+</button>
+
+<button class="btn"
+data-name="STAR 90'S"
+data-stream="https://streams.norawebstreams.de/nora-90er">
+STAR 90'S
+</button>
+
+<button class="btn"
+data-name="LOVE SONGS"
+data-stream="https://stream.laut.fm/love">
+LOVE SONGS
+</button>
+
+<button class="btn"
+data-name="POP HITS"
+data-stream="https://stream.purepop.net/purepop.mp3">
+POP HITS
+</button>
+
+</div>
+
+<div class="footer">
+CLICK TO PLAY • CLICK AGAIN TO STOP
+</div>
+
+<div class="leds"></div>
+
+</div>
+
+<audio id="player"></audio>
+
+<script>
+
+const player=document.getElementById("player");
+const display=document.getElementById("display");
+const record=document.getElementById("record");
+const buttons=document.querySelectorAll(".btn");
+
+let activeButton=null;
+
+buttons.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+const stream=button.dataset.stream;
+const name=button.dataset.name;
+
+if(activeButton===button){
+
+player.pause();
+player.src='';
+
+button.classList.remove("active");
+
+activeButton=null;
+
+display.innerHTML=
+"NOW PLAYING : NONE";
+
+record.classList.add("stop");
+
+return;
+}
+
+buttons.forEach(btn=>
+btn.classList.remove("active"));
+
+player.src=stream;
+player.play();
+
+button.classList.add("active");
+
+activeButton=button;
+
+display.innerHTML=
+"NOW PLAYING : " + name;
+
+record.classList.remove("stop");
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
