@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deluxe Wurlitzer Jukebox</title>
+<title>Deluxe Wurlitzer</title>
 
 <style>
 
@@ -23,8 +23,6 @@ align-items:center;
 overflow:hidden;
 }
 
-/* BACKGROUND GLOW */
-
 body::before{
 content:'';
 position:fixed;
@@ -40,8 +38,6 @@ from{filter:brightness(1);}
 to{filter:brightness(1.4);}
 }
 
-/* JUKEBOX */
-
 .jukebox{
 width:800px;
 border-radius:40px;
@@ -53,8 +49,6 @@ box-shadow:
 0 0 50px #00ffff,
 0 0 100px #ff00aa;
 }
-
-/* LED BORDER */
 
 .leds{
 height:20px;
@@ -74,8 +68,6 @@ from{background-position:0;}
 to{background-position:250px;}
 }
 
-/* ARCH */
-
 .arch{
 height:120px;
 display:flex;
@@ -91,7 +83,6 @@ linear-gradient(
 #00ffff,
 #3366ff,
 #ff00ff);
-
 animation:rainbow 6s linear infinite;
 }
 
@@ -100,16 +91,31 @@ animation:rainbow 6s linear infinite;
 100%{filter:hue-rotate(360deg);}
 }
 
-.arch h1{
+.titleblock{
+text-align:center;
+}
+
+.titleblock h1{
 color:white;
 font-size:42px;
+letter-spacing:3px;
 text-shadow:
 0 0 10px white,
 0 0 20px white,
-0 0 30px white;
+0 0 40px #00ffff;
 }
 
-/* RECORD */
+.titleblock h2{
+margin-top:8px;
+font-size:22px;
+font-weight:normal;
+color:#ffd700;
+letter-spacing:2px;
+text-shadow:
+0 0 10px #ffd700,
+0 0 20px #ffd700,
+0 0 40px #ffcc00;
+}
 
 .record-area{
 height:220px;
@@ -158,8 +164,6 @@ from{transform:rotate(0deg);}
 to{transform:rotate(360deg);}
 }
 
-/* NOW PLAYING */
-
 .display{
 background:black;
 color:#00ff88;
@@ -182,8 +186,6 @@ animation:scroll 12s linear infinite;
 from{transform:translateX(0);}
 to{transform:translateX(-100%);}
 }
-
-/* EQUALIZER */
 
 .equalizer{
 height:80px;
@@ -215,8 +217,6 @@ animation-duration:1s;
 100%{height:15px;}
 }
 
-/* BUTTONS */
-
 .buttons{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -233,12 +233,8 @@ cursor:pointer;
 font-size:22px;
 font-weight:bold;
 color:white;
-background:
-linear-gradient(#444,#111);
-
-box-shadow:
-0 0 12px #00c8ff;
-
+background:linear-gradient(#444,#111);
+box-shadow:0 0 12px #00c8ff;
 transition:.25s;
 }
 
@@ -250,14 +246,11 @@ box-shadow:
 }
 
 .btn.active{
-background:
-linear-gradient(#00c853,#006b33);
-
+background:linear-gradient(#00c853,#006b33);
 box-shadow:
 0 0 20px #00ff66,
 0 0 50px #00ff66,
 0 0 80px #00ff66;
-
 animation:pulse 1s infinite;
 }
 
@@ -266,8 +259,6 @@ animation:pulse 1s infinite;
 transform:scale(1.05);
 }
 }
-
-/* FOOTER */
 
 .footer{
 padding:16px;
@@ -287,7 +278,10 @@ font-size:14px;
 <div class="leds"></div>
 
 <div class="arch">
-<h1>181.FM DELUXE WURLITZER</h1>
+<div class="titleblock">
+<h1>DELUXE WURLITZER</h1>
+<h2>Sonja_Holland</h2>
+</div>
 </div>
 
 <div class="record-area">
@@ -296,62 +290,30 @@ font-size:14px;
 
 <div class="display">
 <div class="scroll" id="display">
-NOW PLAYING : NONE
+NOW PLAYING : AWESOME 80'S
 </div>
 </div>
 
 <div class="equalizer">
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
+<div class="bar"></div><div class="bar"></div><div class="bar"></div>
+<div class="bar"></div><div class="bar"></div><div class="bar"></div>
+<div class="bar"></div><div class="bar"></div><div class="bar"></div>
 <div class="bar"></div>
 </div>
 
 <div class="buttons">
 
-<button class="btn"
-data-name="SOUL"
-data-stream="https://stream.laut.fm/love">
-SOUL
-</button>
+<button class="btn" data-name="SOUL" data-stream="https://stream.laut.fm/love">SOUL</button>
 
-<button class="btn"
-data-name="SUPER 70'S"
-data-stream="https://ais-sa2.cdnstream1.com/2447_192.mp3">
-SUPER 70'S
-</button>
+<button class="btn" data-name="SUPER 70'S" data-stream="https://ais-sa2.cdnstream1.com/2447_192.mp3">SUPER 70'S</button>
 
+<button class="btn" data-name="AWESOME 80'S" data-stream="http://ice1.somafm.com/u80s-128-mp3">AWESOME 80'S</button>
 
-<button class="btn"
-data-name="AWESOME 80'S"
-data-stream="http://ice1.somafm.com/u80s-128-mp3">
-AWESOME 80'S
-</button>
+<button class="btn" data-name="STAR 90'S" data-stream="https://streams.90s90s.de/90s00s/mp3-128/streams.90s90s.de/">STAR 90'S</button>
 
-<button class="btn"
-data-name="STAR 90'S"
-data-stream="https://streams.90s90s.de/90s00s/mp3-128/streams.90s90s.de/">
-STAR 90'S
-</button>
+<button class="btn" data-name="LOVE SONGS" data-stream="https://stream.laut.fm/love">LOVE SONGS</button>
 
-
-<button class="btn"
-data-name="LOVE SONGS"
-data-stream="https://stream.laut.fm/love">
-LOVE SONGS
-</button>
-
-<button class="btn"
-data-name="POP HITS"
-data-stream="http://bigrradio.cdnstream1.com/5181_128">
-POP HITS
-</button>
+<button class="btn" data-name="POP HITS" data-stream="http://bigrradio.cdnstream1.com/5181_128">POP HITS</button>
 
 </div>
 
@@ -390,16 +352,14 @@ button.classList.remove("active");
 
 activeButton=null;
 
-display.innerHTML=
-"NOW PLAYING : NONE";
+display.innerHTML="NOW PLAYING : NONE";
 
 record.classList.add("stop");
 
 return;
 }
 
-buttons.forEach(btn=>
-btn.classList.remove("active"));
+buttons.forEach(btn=>btn.classList.remove("active"));
 
 player.src=stream;
 player.play();
@@ -408,12 +368,29 @@ button.classList.add("active");
 
 activeButton=button;
 
-display.innerHTML=
-"NOW PLAYING : " + name;
+display.innerHTML="NOW PLAYING : " + name;
 
 record.classList.remove("stop");
 
 });
+
+});
+
+/* AUTO START AWESOME 80'S */
+
+window.addEventListener('load',()=>{
+
+const autoButton=document.querySelector('[data-name="AWESOME 80\'S"]');
+
+if(autoButton){
+
+setTimeout(()=>{
+
+autoButton.click();
+
+},1000);
+
+}
 
 });
 
